@@ -26,6 +26,7 @@ body {
     background-color: var(--foreground);
     border-radius: 20px;
     box-shadow: 8px 6px 17px 10px rgb(0 0 0 / 20%);
+    overflow-y: auto
 }
 
 .auth-container {
@@ -80,6 +81,7 @@ body {
     background: var(--background) !important;
     color: var(--text-dark) !important;
     letter-spacing: 0px !important;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -218,6 +220,10 @@ body {
 
 
 /* new stuff! */
+.top {
+    display: flex;
+    justify-content: space-between;
+}
 .palettes {
     margin-left: 1rem;
     margin-top: 1rem;
@@ -239,6 +245,23 @@ body {
 }
 .palettes button.violet {
     background-color: #613dc1;
+}
+.dyslexia, .logout {
+    margin-right: 1rem;
+    margin-top: 1rem;
+    background-color: var(--button);
+    color: var(--text-dark);
+    font-weight: 500;
+    border: none;
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 0rem 2rem;
+}
+.dyslexia {
+    margin-right: .5rem;
+}
+.dyslexia:hover, .logout:hover {
+    background-color: var(--text);
 }
 
 

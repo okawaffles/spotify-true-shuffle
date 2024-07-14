@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
     <head>
         <!-- Primary Meta Tags -->
         <title>True Shuffle (okawaffles fork) | Spotify</title>
@@ -51,16 +51,20 @@
         <script type="text/javascript" src="assets/js/main.js"></script>
     </head>
     <body>
-        <a class="github-icon" target="_blank" href="https://github.com/okawaffles/spotify-true-shuffle"
-            ><img src="assets/images/github_black.png" class="github-icon-img"
+        <a class="github-icon" target="_blank" href="https://github.com/okawaffles/spotify-true-shuffle" rel="noopener"
+            ><img src="assets/images/github_black.png" class="github-icon-img" title="GitHub icon"
         /></a>
-        <div class="page-container" style="overflow-y: auto">
+        <div class="page-container">
             <div class="top">
                 <div class="palettes">
-                    <button class="green" onclick="SetTheme('green')"></button>
-                    <button class="blue" onclick="SetTheme('blue')"></button>
-                    <button class="pink" onclick="SetTheme('pink')"></button>
-                    <button class="violet" onclick="SetTheme('violet')"></button>
+                    <button title="green theme" class="green" onclick="SetTheme('green')"></button>
+                    <button title="blue theme" class="blue" onclick="SetTheme('blue')"></button>
+                    <button title="pink theme" class="pink" onclick="SetTheme('pink')"></button>
+                    <button title="violet theme" class="violet" onclick="SetTheme('violet')"></button>
+                </div>
+                <div class="right">
+                    <button class="dyslexia" id="dyslexia" title="dyslexia font toggle">Enable Dyslexic-friendly font</button>
+                    <button class="logout" id="logout" title="log out button">Log Out</button>
                 </div>
             </div>
 
@@ -70,7 +74,7 @@
                 </div>
 
                 <div class="row mb-5">
-                    <img src="assets/images/spotify_white.png" class="spotify-logo" />
+                    <img title="Spotify logo" src="assets/images/spotify_white.png" class="spotify-logo" />
                 </div>
 
                 <div id="auth_section" class="container" style="margin-top: 12%">

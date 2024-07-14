@@ -60,4 +60,20 @@ function SetTheme(color) {
 
 docReady(() => {
     ReloadProperties();
+
+    document.getElementById('logout').onclick = function () {
+        window.localStorage.removeItem('last_connection_at');
+        window.localStorage.removeItem('auth_hash');
+        window.localStorage.removeItem('access_token');
+        location.reload();
+    }
+
+    document.getElementById('dyslexia').onclick = function () {
+        const is_enabled = window.localStorage.getItem('font') == 'dyslexic';
+        
+        window.localStorage.setItem('font', is_enabled?'normal':'dyslexic');
+
+        document.getElementById('dyslexia').innerText = is_enabled?'Enable Dyslexic-friendly font':'Disable Dyslexic-friendly font';
+        ReloadProperties();
+    }
 });
