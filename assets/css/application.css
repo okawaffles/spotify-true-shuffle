@@ -279,7 +279,12 @@ body {
 
 @media screen and (max-width: 540px) {
     body {
-        padding: 15px;
+        padding: 0;
+    }
+
+    .page-container {
+        border-radius: 0;
+        padding-top: 16px;
     }
 
     .auth-container {
@@ -316,9 +321,14 @@ body {
 
     .landing-title {
         font-size: 1.8rem;
+        padding-top: 1.5rem !important;
     }
 
     .label {
         font-size: 1rem;
+    }
+
+    .read-if-cute {
+        display: none;
     }
 }
