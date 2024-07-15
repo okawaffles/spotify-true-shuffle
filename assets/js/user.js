@@ -1,3 +1,9 @@
+let first_properties_reload = true;
+
+/**
+ * Wait for the document to be ready, then run the callback provided.
+ * @param {Function} fn A callback function to be run when the document is ready
+ */
 function docReady(fn) {
     // see if DOM is already available
     if (document.readyState === "complete" || document.readyState === "interactive") {
@@ -8,14 +14,15 @@ function docReady(fn) {
     }
 }
 
-
+/**
+ * Load the user's properties and apply them
+ */
 function ReloadProperties() {
-    const USE_OPENDYSLEXIC = window.localStorage.getItem('font') == 'dyslexic';
+    log('USER', 'Reloading user settings...');
+
     const COLOR_SCHEME = window.localStorage.getItem('color') || 'green';
 
     let properties = '';
-
-    if (USE_OPENDYSLEXIC) properties += '--font: "Open-Dyslexic";';
 
 
     switch (COLOR_SCHEME) {
@@ -64,11 +71,44 @@ function ReloadProperties() {
     document.documentElement.style.cssText = properties;
 }
 
+// Set and store theme
 function SetTheme(color) {
     window.localStorage.setItem('color', color);
     ReloadProperties();
 }
 
+/**
+ * Store a given playlist in window.localStorage
+ * @param playlist_id ID of the playlist to store 
+ */
+function StoreLastUsedPlaylist(playlist_id) {
+    window.localStorage.setItem('last_used_playlist', playlist_id);
+}
+
+/**
+ * Get `last_used_playlist` from window.localStorage and set the playlist dropdown to it
+ * If it doesn't exist, don't do anything.
+ */
+function RestoreLastUsedPlaylist() {
+    log ('USER', 'Restoring last used playlist...');
+    const LAST_USED_PLAYLIST = window.localStorage.getItem('last_used_playlist');
+    if (!LAST_USED_PLAYLIST) return;
+    
+    const AVAILABLE_PLAYLISTS = document.getElementById('choose_playlist').options;
+
+    // make sure that the playlist is still an option. if not, do nothing
+    let playlist_options = [];
+    for(let i = 0; i < AVAILABLE_PLAYLISTS.length; i++) {
+        playlist_options.push(AVAILABLE_PLAYLISTS[i].value);
+    }
+
+    if (playlist_options.indexOf(LAST_USED_PLAYLIST) == -1) {
+        log('USER', 'Last used playlist no longer exists, skipping.')
+        return; 
+    }
+
+    document.getElementById('choose_playlist').value = LAST_USED_PLAYLIST;
+}
 
 
 docReady(() => {

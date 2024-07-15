@@ -23,6 +23,9 @@ async function shuffle_and_play() {
     // Retrieve the selected playlist and device
     const device_id = document.getElementById('choose_device').value;
     const playlist_id = document.getElementById('choose_playlist').value;
+    
+    // Keep the last used playlist in window.localStorage
+    StoreLastUsedPlaylist(playlist_id);
 
     // Retrieve if alt-shuffle is enabled (no duplicant adders back-to-back for shared playlists)
     const alt_shuffle = document.getElementById('alt-shuffle').checked;
@@ -430,6 +433,9 @@ async function load_application() {
 
         // Render the devices in the UI selector
         document.getElementById('choose_playlist').innerHTML = rendered.join('\n');
+
+        // reload the last used playlist after loading all playlists
+        RestoreLastUsedPlaylist();
     } catch (error) {
         log('ERROR', 'Failed to retrieve Spotify playlists.');
         loading_message.innerText = 'Failed to retrieve Spotify playlists. Refresh the page to try again.';
