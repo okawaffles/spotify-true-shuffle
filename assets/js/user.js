@@ -46,8 +46,21 @@ function ReloadProperties() {
                 --button: #858ae3;
             `
             break;
+        case 'lightsout':
+            properties += `
+                --background: #141414;
+                --foreground: #000;
+                --text: #4c1682;
+                --text-dark: white;
+                --button: #230046;
+            `
+            break;
     }
 
+    let themes = document.getElementById('palettes').querySelectorAll('*');
+    themes.forEach(theme => theme.style.border = '3px solid white')
+
+    document.getElementsByClassName(COLOR_SCHEME)[0].style.border = '3px solid lightgreen';
     document.documentElement.style.cssText = properties;
 }
 
@@ -67,13 +80,15 @@ docReady(() => {
         window.localStorage.removeItem('access_token');
         location.reload();
     }
+    if (!localStorage.getItem('access_token'))
+        document.getElementById('logout').remove()
 
-    document.getElementById('dyslexia').onclick = function () {
-        const is_enabled = window.localStorage.getItem('font') == 'dyslexic';
+    // document.getElementById('dyslexia').onclick = function () {
+    //     const is_enabled = window.localStorage.getItem('font') == 'dyslexic';
         
-        window.localStorage.setItem('font', is_enabled?'normal':'dyslexic');
+    //     window.localStorage.setItem('font', is_enabled?'normal':'dyslexic');
 
-        document.getElementById('dyslexia').innerText = is_enabled?'Enable Dyslexic-friendly font':'Disable Dyslexic-friendly font';
-        ReloadProperties();
-    }
+    //     document.getElementById('dyslexia').innerText = is_enabled?'Enable Dyslexic-friendly font':'Disable Dyslexic-friendly font';
+    //     ReloadProperties();
+    // }
 });

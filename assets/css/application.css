@@ -17,6 +17,7 @@ body {
     background: var(--background);
     overflow: hidden;
     color: var(--text);
+    font-family: var(--font);
 }
 
 .page-container {
@@ -154,7 +155,7 @@ body {
     color: var(--text);
     font-size: 1rem;
     font-family: var(--font);
-    font-weight: 300;
+    font-weight: 500;
 }
 
 .label {
@@ -246,6 +247,9 @@ body {
 .palettes button.violet {
     background-color: #613dc1;
 }
+.palettes button.lightsout {
+    background-color: #2d2b3d;
+}
 .dyslexia, .logout {
     margin-right: 1rem;
     margin-top: 1rem;
@@ -262,6 +266,12 @@ body {
 }
 .dyslexia:hover, .logout:hover {
     background-color: var(--text);
+}
+.read-if-cute {
+    float: left;
+    position: absolute;
+    left: 45px;
+    bottom: 25px;
 }
 
 

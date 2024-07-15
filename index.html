@@ -1,8 +1,8 @@
 <html lang="en">
     <head>
         <!-- Primary Meta Tags -->
-        <title>True Shuffle (okawaffles fork) | Spotify</title>
-        <link rel="icon" href="assets/images/spotify_favicon.png" />
+        <title>True Shuffle for Spotify (okawaffles fork)</title>
+        <link rel="icon" href="assets/images/favicon.png" />
         <meta name="viewport" content="width=device-width" />
         <meta charset="utf-8" />
         <meta name="title" content="True Shuffle For Spotify (okawaffles fork)" />
@@ -10,23 +10,23 @@
 
         <!-- Open Graph / Facebook -->
         <meta property="og:type" content="website" />
-        <meta property="og:url" content="https://shuffle.software/" />
+        <meta property="og:url" content="https://shuffle.catgirl.expert/" />
         <meta property="og:title" content="True Shuffle For Spotify (okawaffles fork)" />
         <meta
             property="og:description"
             content="An open-source unbiased music shuffling web application for Spotify."
         />
-        <meta property="og:image" content="https://shuffle.software/assets/images/meta-image.png" />
+        <meta property="og:image" content="https://shuffle.catgirl.expert/assets/images/meta-image.png" />
 
         <!-- Twitter -->
         <meta property="twitter:card" content="summary_large_image" />
-        <meta property="twitter:url" content="https://shuffle.software/" />
+        <meta property="twitter:url" content="https://shuffle.catgirl.expert/" />
         <meta property="twitter:title" content="True Shuffle For Spotify (okawaffles fork)" />
         <meta
             property="twitter:description"
             content="An open-source unbiased music shuffling web application for Spotify."
         />
-        <meta property="twitter:image" content="https://shuffle.software/assets/images/meta-image.png" />
+        <meta property="twitter:image" content="https://shuffle.catgirl.expert/assets/images/meta-image.png" />
 
         <!-- Load Fonts -->
         <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -51,30 +51,35 @@
         <script type="text/javascript" src="assets/js/main.js"></script>
     </head>
     <body>
-        <a class="github-icon" target="_blank" href="https://github.com/okawaffles/spotify-true-shuffle" rel="noopener"
-            ><img src="assets/images/github_black.png" class="github-icon-img" title="GitHub icon"
-        /></a>
+        <a class="github-icon" target="_blank" href="https://github.com/okawaffles/spotify-true-shuffle" rel="noopener">
+            <img src="assets/images/github_black.png" class="github-icon-img" title="GitHub icon"/>
+        </a>
+        <p class="read-if-cute">Hosted and maintained with love by Lily</p>
+        
         <div class="page-container">
             <div class="top">
-                <div class="palettes">
+                <div id="palettes" class="palettes">
                     <button title="green theme" class="green" onclick="SetTheme('green')"></button>
                     <button title="blue theme" class="blue" onclick="SetTheme('blue')"></button>
                     <button title="pink theme" class="pink" onclick="SetTheme('pink')"></button>
                     <button title="violet theme" class="violet" onclick="SetTheme('violet')"></button>
+                    <button title="lights out theme" class="lightsout" onclick="SetTheme('lightsout')"></button>
                 </div>
                 <div class="right">
-                    <button class="dyslexia" id="dyslexia" title="dyslexia font toggle">Enable Dyslexic-friendly font</button>
+                    <!-- <button class="dyslexia" id="dyslexia" title="dyslexia font toggle">Enable Dyslexic-friendly font</button> -->
                     <button class="logout" id="logout" title="log out button">Log Out</button>
                 </div>
             </div>
 
             <div class="container auth-container">
                 <div class="row mb-3 mt-3">
-                    <h1 class="landing-title">True Shuffle For</h1>
+                    <h1 class="landing-title">True Shuffle for Spotify</h1>
                 </div>
 
                 <div class="row mb-5">
-                    <img title="Spotify logo" src="assets/images/spotify_white.png" class="spotify-logo" />
+                    <!-- <img title="Spotify logo" src="assets/images/spotify_white.png" class="spotify-logo" /> -->
+                    <h2 class="text-center">An unbiased, completely random shuffler for your Spotify playlists</h2>
+                    <p class="text-center fs-6">This site is not affiliated with Spotify. Music data is provided by Spotify. A Spotify Premium account is required to use this service.</p>
                 </div>
 
                 <div id="auth_section" class="container" style="margin-top: 12%">
