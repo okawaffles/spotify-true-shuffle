@@ -53,6 +53,15 @@ function ReloadProperties() {
                 --button: #858ae3;
             `
             break;
+        case 'red':
+            properties += `
+                --background: #ad2e24;
+                --foreground: #81171b;
+                --text: #ea8c55;
+                --text-dark: white;
+                --button: #c75146;
+            `
+            break;
         case 'lightsout':
             properties += `
                 --background: #141414;

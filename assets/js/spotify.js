@@ -1,4 +1,6 @@
-const DONT_PLAY_TRACKS = false;
+// this is a flag for development purposes
+// it allows me to click shuffle&play w/o it changing my current spotify activity
+const DONT_PLAY_TRACKS = true; 
 
 async function SpotifyAPI(token) {
     // Initialize the object for containing the Spotify API properties and methods

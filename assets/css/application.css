@@ -250,6 +250,9 @@ body {
 .palettes button.lightsout {
     background-color: #2d2b3d;
 }
+.palettes button.red {
+    background-color: #ad2e24;
+}
 .dyslexia, .logout {
     margin-right: 1rem;
     margin-top: 1rem;

@@ -370,12 +370,20 @@ function SetWelcomeMessage(display_name) {
         time_based_welcome_message = "Good afternoon, ";
     if (d.getHours() > 20)
         time_based_welcome_message = "Good night, ";
+
+    const day_of_week = [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ][d.getDay()];
+
     // choose a random message
     const POSSIBLE_MESSAGES = [
         `What's up, ${display_name}?`,
         `How's it going, ${display_name}?`,
         `Welcome, ${display_name}!`,
         `Hey there, ${display_name}!`,
+        `Ready to shuffle, ${display_name}?`,
+        `Ready for some music, ${display_name}?`,
+        `How's your ${day_of_week} going, ${display_name}?`,
         `${time_based_welcome_message} ${display_name}`
     ];
     
