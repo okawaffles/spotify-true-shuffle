@@ -1,4 +1,4 @@
-const DONT_PLAY_TRACKS = true;
+const DONT_PLAY_TRACKS = false;
 
 async function SpotifyAPI(token) {
     // Initialize the object for containing the Spotify API properties and methods
