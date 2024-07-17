@@ -1,16 +1,33 @@
+* {
+    transition: color .5s ease, background-color .5s ease;
+}
+
+html {
+    --background: #32746D;
+    --foreground: #104F55;
+    --text: #9EC5AB;
+    --text-dark: #01200F;
+    --button: #4fb4ac;
+
+    --font: 'Work Sans';
+}
+
 body {
     padding: 30px;
-    background: white;
+    background: var(--background);
     overflow: hidden;
-    color: white;
+    color: var(--text);
+    font-family: var(--font);
 }
 
 .page-container {
     width: 100%;
     height: 100%;
-    background: linear-gradient(300deg, black, #070707);
+    /* background: linear-gradient(300deg, black, #070707); */
+    background-color: var(--foreground);
     border-radius: 20px;
     box-shadow: 8px 6px 17px 10px rgb(0 0 0 / 20%);
+    overflow-y: auto
 }
 
 .auth-container {
@@ -26,24 +43,25 @@ body {
 
 .landing-title {
     text-align: center;
-    font-family: 'Poppins';
+    font-family: var(--font);
     font-weight: 600;
     font-size: 2.5rem;
 }
 
 .landing-message {
     text-align: center;
-    font-family: 'Poppins';
+    font-family: var(--font);
     font-weight: 400;
+    font-size: 1.25rem;
 }
 
 .auth-button {
     width: 100%;
-    border-radius: 10px;
-    background: white;
-    color: black;
-    border: 2px solid black;
-    font-family: 'Poppins';
+    border-radius: 2.25rem;
+    background: var(--button);
+    color: var(--text-dark);
+    border: none;
+    font-family: var(--font);
     font-weight: 600;
     padding: 20px;
     margin-top: 1rem;
@@ -61,20 +79,22 @@ body {
 
 .auth-button.disabled {
     opacity: 0.3;
-    background: white !important;
-    color: black !important;
+    background: var(--background) !important;
+    color: var(--text-dark) !important;
     letter-spacing: 0px !important;
+    -webkit-user-select: none;
     user-select: none;
 }
 
 .page-select {
+    font-family: var(--font);
     display: block;
     padding: 1rem;
-    background-color: black;
+    background-color: var(--button);
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23FFFFFF' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
-    border: 2px solid white;
-    border-radius: 10px;
-    color: white;
+    border: none;
+    border-radius: 1rem;
+    color: var(--text-dark);
     width: 100%;
     margin: auto;
     outline: none;
@@ -94,13 +114,13 @@ body {
     margin: auto;
     width: 100%;
     max-width: 750px;
-    background: white;
+    background: var(--background);
     border-radius: 15px;
     padding: 10px;
     display: flex;
     align-items: center;
     cursor: pointer;
-    transition: opacity 0.4s ease;
+    transition: opacity 0.4s ease, color .5s ease, background-color .5s ease;
 }
 
 .song-element.muted {
@@ -112,7 +132,7 @@ body {
     background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='%23000000' d='M3 18.5v-17l14 8.5-14 8.5z' rx='2' ry='2' /%3e%3c/svg%3e");
     width: 1.5em;
     height: 1.5em;
-    transition: all .3s;
+    transition: all .3s, color .5s ease, background-color .5s ease;
     cursor: pointer;
     transform: scale(0.3);
     opacity: 0;
@@ -132,32 +152,32 @@ body {
 }
 
 .subtitle {
-    color: white;
+    color: var(--text);
     font-size: 1rem;
-    font-family: 'Poppins';
-    font-weight: 300;
+    font-family: var(--font);
+    font-weight: 500;
 }
 
 .label {
-    color: white;
+    color: var(--text);
     font-size: 1.2rem;
-    font-family: 'Poppins';
+    font-family: var(--font);
     font-weight: 600
 }
 
 .song-title {
-    color: black;
+    color: var(--text-dark) ;
     font-size: 1.3rem;
     float: left;
     margin-left: 1em;
-    font-family: 'Poppins';
+    font-family: var(--font);
     font-weight: 600;
     margin-bottom: 0px;
     width: 85%;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: all .4s;
+    transition: all .4s, color .5s ease, background-color .5s ease;
     letter-spacing: 0px;
 }
 
@@ -167,7 +187,7 @@ body {
 
 .song-subtitle {
     font-size: 0.8rem;
-    color: grey;
+    color: var(--text);
     font-weight: 600;
 }
 
@@ -175,14 +195,14 @@ body {
     width: 50px;
     height: 50px;
     border-radius: 10px;
-    background: white;
+    background: var(--text);
     float: right;
     position: absolute;
     right: 50px;
     bottom: 50px;
     cursor: pointer;
     box-shadow: 0px 0px 25px 2px rgb(255 255 255 / 10%);
-    transition: all 0.3s;
+    transition: all 0.3s, color .5s ease, background-color .5s ease;
 }
 
 .github-icon-img {
@@ -199,9 +219,75 @@ body {
     box-shadow: 0px 0px 25px 2px rgb(255 255 255 / 20%);
 }
 
+
+/* new stuff! */
+.top {
+    display: flex;
+    justify-content: space-between;
+}
+.palettes {
+    margin-left: 1rem;
+    margin-top: 1rem;
+}
+.palettes button {
+    width: 3rem;
+    height: 3rem;
+    border: 3px solid white;
+    border-radius: .5rem;
+}
+.palettes button.green {
+    background-color: #32746D;
+}
+.palettes button.blue {
+    background-color: #00b4d8;
+}
+.palettes button.pink {
+    background-color: #ffb3c6;
+}
+.palettes button.violet {
+    background-color: #613dc1;
+}
+.palettes button.lightsout {
+    background-color: #2d2b3d;
+}
+.palettes button.red {
+    background-color: #ad2e24;
+}
+.dyslexia, .logout {
+    margin-right: 1rem;
+    margin-top: 1rem;
+    background-color: var(--button);
+    color: var(--text-dark);
+    font-weight: 500;
+    border: none;
+    border-radius: 1rem;
+    height: 3rem;
+    padding: 0rem 2rem;
+}
+.dyslexia {
+    margin-right: .5rem;
+}
+.dyslexia:hover, .logout:hover {
+    background-color: var(--text);
+}
+.read-if-cute {
+    float: left;
+    position: absolute;
+    left: 45px;
+    bottom: 25px;
+}
+
+
+/* mobile support: */
+
 @media screen and (max-width: 540px) {
     body {
-        padding: 15px;
+        padding: 0;
+    }
+
+    .page-container {
+        border-radius: 0;
+        padding-top: 16px;
     }
 
     .auth-container {
@@ -238,9 +324,14 @@ body {
 
     .landing-title {
         font-size: 1.8rem;
+        padding-top: 1.5rem !important;
     }
 
     .label {
         font-size: 1rem;
+    }
+
+    .read-if-cute {
+        display: none;
     }
 }

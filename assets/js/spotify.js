@@ -1,3 +1,7 @@
+// this is a flag for development purposes
+// it allows me to click shuffle&play w/o it changing my current spotify activity
+const DONT_PLAY_TRACKS = true; 
+
 async function SpotifyAPI(token) {
     // Initialize the object for containing the Spotify API properties and methods
     const instance = {
@@ -266,6 +270,10 @@ async function SpotifyAPI(token) {
 
     // Define the method for playing tracks with uris
     instance.play_tracks = async (device_id, options = {}) => {
+        // if the DONT_PLAY_TRACKS flag is set to true, skip playing tracks,
+        // just return true to make it think we're playing
+        if (DONT_PLAY_TRACKS) return true;
+
         // Destructure the required parameters from the options object
         const { context_uri, uris, offset, position_ms } = options;
 

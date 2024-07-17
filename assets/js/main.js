@@ -23,6 +23,9 @@ async function shuffle_and_play() {
     // Retrieve the selected playlist and device
     const device_id = document.getElementById('choose_device').value;
     const playlist_id = document.getElementById('choose_playlist').value;
+    
+    // Keep the last used playlist in window.localStorage
+    StoreLastUsedPlaylist(playlist_id);
 
     // Retrieve if alt-shuffle is enabled (no duplicant adders back-to-back for shared playlists)
     const alt_shuffle = document.getElementById('alt-shuffle').checked;
@@ -57,7 +60,7 @@ async function shuffle_and_play() {
         if (songs.length === 0) {
             log('ERROR', 'No songs to shuffle.');
             ui_render_play_button(UI_BUTTONS_TAGS.PLAY, true);
-            alert('No songs to shuffle. Please select a different playlist.');
+            alert('No songs to shuffle. Please select a different playlist. (Local songs are not supported)');
             return;
         }
     } catch (error) {
@@ -294,29 +297,13 @@ async function save_to_playlist() {
     <strong>${name}</strong>.`);
 }
 
+// code is now split up so we need to make this a global variable
+let loading_message; // need to wait for the doc to be ready to select this element
+
 /**
- * Begins loading the application with the Spotify user access token.
+ * Get the available devices that the shuffled songs can be played on
  */
-async function load_application() {
-    // Hide the authentication UI & Display the loading UI
-    log('APPLICATION', 'Loading application...');
-    const loading_message = document.getElementById('loader_message');
-    document.getElementById('loader_container').setAttribute('style', '');
-    document.getElementById('auth_section').setAttribute('style', 'display: none;');
-
-    // Initialize the Spotify API instance
-    let profile;
-    try {
-        loading_message.innerText = 'Retrieving Your Spotify Profile';
-        SPOTIFY_API = await SpotifyAPI(auth_get_access_token());
-        profile = await SPOTIFY_API.get_profile(); // This should be cached in the SpotifyAPI instance already
-    } catch (error) {
-        log('ERROR', 'Failed to retrieve Spotify profile.');
-        loading_message.innerText = 'Failed to retrieve Spotify profile. Refresh the page to try again.';
-        return console.log(error);
-    }
-
-    // Fetch the user's devices from Spotify
+async function LoadAvailableDevices() {
     try {
         loading_message.innerText = 'Retrieving Your Spotify Devices';
         const devices = await SPOTIFY_API.get_devices();
@@ -347,8 +334,88 @@ async function load_application() {
             typeof error == 'string'
                 ? error
                 : 'Failed to retrieve any active Spotify devices for playback. Refresh the page to try again.';
+        return console.error(error);
+    }
+}
+
+/**
+ * Create HTML elements for all the available playlists
+ */
+function RenderPlaylistOptions(playlists, identifiers) {
+    return identifiers.map((id) => {
+        // If there is no ID, render an empty spacer
+        if (!id) return '<option value="spacer" disabled>    </option>';
+
+        // Render the playlist as an option in the UI selector
+        const playlist = playlists[id];
+        const playlist_songs = playlist.tracks.total;
+        const playlist_name = clamp_string(playlist.name || playlist.id || 'Unknown', 25);
+        const playlist_author_name = clamp_string(
+            playlist.owner.display_name || playlist.owner.id || 'Unknown',
+            25
+        );
+        const playlist_owned_by_me = playlist.owner.me === true;
+        return `<option value="${playlist.id}">${playlist_name} - ${playlist_songs} Songs ${
+            playlist_owned_by_me ? '(By You)' : `(By ${playlist_author_name})`
+        }</option>`;
+    });
+}
+
+function SetWelcomeMessage(display_name) {
+    let time_based_welcome_message;
+    let d = new Date();
+    if (d.getHours() < 12)
+        time_based_welcome_message = "Good morning, ";
+    if (d.getHours() > 12)
+        time_based_welcome_message = "Good afternoon, ";
+    if (d.getHours() > 20)
+        time_based_welcome_message = "Good night, ";
+
+    const day_of_week = [
+        "Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"
+    ][d.getDay()];
+
+    // choose a random message
+    const POSSIBLE_MESSAGES = [
+        `What's up, ${display_name}?`,
+        `How's it going, ${display_name}?`,
+        `Welcome, ${display_name}!`,
+        `Hey there, ${display_name}!`,
+        `Ready to shuffle, ${display_name}?`,
+        `Ready for some music, ${display_name}?`,
+        `How's your ${day_of_week} going, ${display_name}?`,
+        `${time_based_welcome_message} ${display_name}`
+    ];
+    
+    const CHOSEN_MESSAGE = POSSIBLE_MESSAGES[Math.floor(Math.random() * POSSIBLE_MESSAGES.length)];
+
+    document.querySelector('.landing-title').innerText = CHOSEN_MESSAGE;
+}
+
+/**
+ * Begins loading the application with the Spotify user access token.
+ */
+async function load_application() {
+    // Hide the authentication UI & Display the loading UI
+    log('APPLICATION', 'Loading application...');
+    loading_message = document.getElementById('loader_message');
+    document.getElementById('loader_container').setAttribute('style', '');
+    document.getElementById('auth_section').setAttribute('style', 'display: none;');
+
+    // Initialize the Spotify API instance
+    let profile;
+    try {
+        loading_message.innerText = 'Retrieving Your Spotify Profile';
+        SPOTIFY_API = await SpotifyAPI(auth_get_access_token());
+        profile = await SPOTIFY_API.get_profile(); // This should be cached in the SpotifyAPI instance already
+    } catch (error) {
+        log('ERROR', 'Failed to retrieve Spotify profile.');
+        loading_message.innerText = 'Failed to retrieve Spotify profile. Refresh the page to try again.';
         return console.log(error);
     }
+
+    // Fetch the user's devices from Spotify
+    await LoadAvailableDevices();
 
     // Fetch the user's playlists from Spotify
     try {
@@ -410,26 +477,13 @@ async function load_application() {
         }
 
         // Render the playlist identifiers to HTML for the UI
-        const rendered = identifiers.map((id) => {
-            // If there is no ID, render an empty spacer
-            if (!id) return '<option value="spacer" disabled>    </option>';
-
-            // Render the playlist as an option in the UI selector
-            const playlist = playlists[id];
-            const playlist_songs = playlist.tracks.total;
-            const playlist_name = clamp_string(playlist.name || playlist.id || 'Unknown', 25);
-            const playlist_author_name = clamp_string(
-                playlist.owner.display_name || playlist.owner.id || 'Unknown',
-                25
-            );
-            const playlist_owned_by_me = playlist.owner.me === true;
-            return `<option value="${playlist.id}">${playlist_name} - ${playlist_songs} Songs ${
-                playlist_owned_by_me ? '(By You)' : `(By ${playlist_author_name})`
-            }</option>`;
-        });
+        const rendered = RenderPlaylistOptions(playlists, identifiers);
 
         // Render the devices in the UI selector
         document.getElementById('choose_playlist').innerHTML = rendered.join('\n');
+
+        // reload the last used playlist after loading all playlists
+        RestoreLastUsedPlaylist();
     } catch (error) {
         log('ERROR', 'Failed to retrieve Spotify playlists.');
         loading_message.innerText = 'Failed to retrieve Spotify playlists. Refresh the page to try again.';
@@ -437,7 +491,7 @@ async function load_application() {
     }
 
     // Update the landing title with a more personalized message
-    document.querySelector('.landing-title').innerText = `Welcome, ${profile.display_name}!`;
+    SetWelcomeMessage(profile.display_name);
 
     // Hide the loading UI & Display the application UI
     document.querySelector('.container').classList.add('authenticated');
